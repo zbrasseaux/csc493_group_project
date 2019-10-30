@@ -1,0 +1,5 @@
+# TEST FILES
+*.test
+test.*
+*_test
+test_*
