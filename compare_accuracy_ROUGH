@@ -1,0 +1,26 @@
+import csv
+
+my_sents = []
+given_sents =[]
+
+with open('GIVEN_formatted_results_sample_data.csv') as given_csv_reader:
+    for row in given_csv_reader:
+        given_sents.append(row)
+    
+with open('MY_results_sample_data.csv') as my_csv_reader:
+    for row in my_csv_reader:
+        my_sents.append(row)
+        
+num_correct = 0
+num_total = 0
+
+with open('GIVEN_formatted_results_sample_data.csv') as given_csv_reader:
+    with open('MY_results_sample_data.csv') as my_csv_reader:
+        for row in given_csv_reader:
+            print(row)
+            if my_sent[num_total] == given_sents[num_total]:
+                num_correct += 1
+            num_total += 1
+    
+print(num_correct)
+print(num_total)
