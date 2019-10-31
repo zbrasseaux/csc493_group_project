@@ -25,32 +25,18 @@ def get_tweets():
     # empty list to store parsed tweets
     tweets = []
     fetched_tweets = []
+    file = open('result.csv','w+')
     with open('twitter dataset sample.csv') as csv_file:
         csv_reader = csv.reader(csv_file, delimiter=',')
         line_count = 0
         for row in csv_reader:
-            #print('tweet #' + str(row[0]) + ': ' + str(row[5]))
             fetched_tweets.append(row[5])
             line_count += 1
-        print(f'Processed {line_count} lines.')
-    
-    num_pos = 0
-    num_neg = 0
-    num_neut = 0
-    
-    for tweet in fetched_tweets:
-        sentiment = get_tweet_sentiment(tweet)
-        print(sentiment)
-        print(tweet)
-        if sentiment == 'positive':
-            num_pos += 1
-        elif sentiment == 'negative':
-            num_neg += 1
-        else:
-            num_neut += 1
+        #print(f'Processed {line_count} lines.')
+        for tweet in fetched_tweets:
+            sentiment = get_tweet_sentiment(tweet)
+            #print(sentiment)
+            file.write(sentiment + ',')
+    file.close()
             
-    print('Num Pos:', num_pos)
-    print('Num Neg:', num_neg)
-    print('Num Neut:', num_neut)
-        
 get_tweets()
