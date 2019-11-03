@@ -1,23 +1,17 @@
 import csv
 
-sent = []
-count = 0
-#file = open('GIVEN_formatted_results_sample_data.csv','w+')
+file = open('GIVEN_formatted_results_sample_data','w+')
+
 with open('twitter dataset sample.csv') as csv_file:
     csv_reader = csv.reader(csv_file, delimiter=',')
     for row in csv_reader:
         sentiment = row[0]
         if sentiment == '0':
-            sentiment = 'neg'
+            sentiment = 'N'
         elif sentiment == '2':
-            sentiment = 'neut'
+            sentiment = 'Z'
         elif sentiment == '4':
-            sentiment = 'pos'
-        sent[count] = sentiment
-        count += 1
-#file.close()
-
-with open('GIVEN_formatted_results_sample_data.csv') as csvfile:
-    filewriter = csv.writer(csvfile, delimiter=',')
-    for val in sent:
-        filewriter.writerow(val)
+            sentiment = 'P'
+        file.write(sentiment + '\n')
+        
+file.close()
