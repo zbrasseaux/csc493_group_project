@@ -14,6 +14,13 @@ maxlen = 140
 
 
 def tf_idf_algo(tweets):
+	"""Implementation of the tf_idf algorithm found here:
+	http://www.tfidf.com/
+	This computes a score based on how many  times the word occurs in 
+	the entire set of words, as well as how many tweets it appears in.
+	"""
+
+	# create a bag of all words
 	tot_bow = []
 
 	for tweet in tweets:
@@ -21,8 +28,10 @@ def tf_idf_algo(tweets):
 			if word[0] in letters:
 				tot_bow.append(str(word).upper())
 
+	# minimize the bag of words
 	min_bow = set(tot_bow)
 
+	# calculate frequency of each word
 	freq = {}
 
 	for word in tot_bow:
@@ -31,11 +40,13 @@ def tf_idf_algo(tweets):
 		except KeyError:
 			freq[word] = 1
 
+	# calculate term frequency (tf) of each word
 	tf = {}
 
 	for word in min_bow:
 		tf[word] = freq[word]/len(tot_bow)
 
+	# calculate inverse document frequency (idf) of each word
 	idf = {}
 
 	for word in min_bow:
@@ -47,11 +58,13 @@ def tf_idf_algo(tweets):
 		if t != 0:
 			idf[word] = math.log(math.e, (len(tweets)/t))
 
+	# calculate final score per word
 	tf_idf = {}
 
 	for word in min_bow:
 		tf_idf[word] = tf[word]/idf[word]
 
+	# create array of scores per tweet
 	scores = []
 	for tweet in tweets:
 		tweet_score = []
@@ -65,6 +78,10 @@ def tf_idf_algo(tweets):
 	return scores
 
 def pad_num(train, test):
+	"""Basic implementation of zero-padding
+	"""
+
+	# find max length of all tweets
 	max_val = 0
 	for i in train:
 		if len(i) > max_val:
@@ -73,6 +90,7 @@ def pad_num(train, test):
 		if len(i) > max_val:
 			max_val = len(i)
 
+	# pad all smaller tweets
 	for i in train:
 		while len(i) < max_val:
 			i.append(0)
@@ -82,17 +100,22 @@ def pad_num(train, test):
 
 	return train, test
 
+# read in file
 data = pd.read_csv(sys.argv[1], \
 	names=['uk', 'id', 'date_time', 'topic', 'user', 'tweet'])
 
+# split into training and testing
 train, test = train_test_split(data, test_size=.35)
 
+# retrieve only the tweets
 tweets_train = train['tweet'].values
 tweets_test = test['tweet'].values
 
+# get the tf_idf scores
 train = tf_idf_algo(tweets_train)
 test = tf_idf_algo(tweets_test)
 
+# pad the arrays
 train, test = pad_num(train, test)
 
 print(train)
