@@ -12,11 +12,11 @@ def get_tweet_sentiment(tweet):
     analysis = TextBlob(tweet) 
     # set sentiment 
     if analysis.sentiment.polarity > 0: 
-        return 'positive'
+        return 'P'
     elif analysis.sentiment.polarity == 0: 
-        return 'neutral'
+        return 'N'
     else: 
-        return 'negative'
+        return 'Z'
   
 def get_tweets(): 
     ''' 
@@ -25,7 +25,7 @@ def get_tweets():
     # empty list to store parsed tweets
     tweets = []
     fetched_tweets = []
-    file = open('result.csv','w+')
+    file = open('MY_results_sample_data','w+')
     with open('twitter dataset sample.csv') as csv_file:
         csv_reader = csv.reader(csv_file, delimiter=',')
         line_count = 0
@@ -36,7 +36,7 @@ def get_tweets():
         for tweet in fetched_tweets:
             sentiment = get_tweet_sentiment(tweet)
             #print(sentiment)
-            file.write(sentiment + ',')
+            file.write(sentiment + '\n')
     file.close()
             
 get_tweets()
