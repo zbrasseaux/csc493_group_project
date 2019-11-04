@@ -1,0 +1,28 @@
+given_sents =[]
+my_sents = []
+
+with open('GIVEN_formatted_results_full_data') as file:
+    for line in file:
+        for ch in line:
+            given_sents.append(ch)
+            num_total += 1
+
+with open('MY_results_full_data') as file:
+    for line in file:
+        for ch in line:
+            my_sents.append(ch)
+            num_total += 1
+        
+num_correct = 0
+num_total = 0
+
+for sent in given_sents:
+    if my_sents[num_total] == sent:
+        num_correct += 1
+    num_total += 1
+    
+print(num_correct)
+print(num_total)
+
+accuracy = num_correct / num_total
+print('{:.2%}'.format(accuracy))
