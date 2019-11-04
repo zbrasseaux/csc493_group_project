@@ -27,6 +27,5 @@ def get_tweets():
             sentiment = get_tweet_sentiment(tweet)
             file.write(sentiment)
     file.close()
-    print('done')
             
 get_tweets()
