@@ -1,0 +1,21 @@
+import csv
+
+file = open('GIVEN_formatted_results_full_data','w+')
+
+line_count = 0
+
+with open('population_preprocessed_FULL.csv', encoding = 'utf8') as csv_file:
+    csv_reader = csv.reader(csv_file, delimiter=',')
+    for row in csv_reader:
+        if line_count != 0:
+            sentiment = row[0]
+            if sentiment == '0':
+                sentiment = 'N'
+            elif sentiment == '2':
+                sentiment = 'Z'
+            elif sentiment == '4':
+                sentiment = 'P'
+            file.write(sentiment)
+        line_count += 1
+        
+file.close()
